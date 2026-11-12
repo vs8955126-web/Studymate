@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en-GB"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>StudyMate AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07080c;--card:#10121a;--ink:#f4f5f7;--mute:#9aa0b4;--line:#23263a;--blue:#c8ff3d;--blue2:rgba(200,255,61,.1);--lav:#8b6bff;--lav2:rgba(139,107,255,.16);--ok:#2f9e6e;--bad:#ff6b6b;--sh:0 2px 18px rgba(0,0,0,.4);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif}
+h1,h2,h3{line-height:1.15;margin:0 0 .5rem;letter-spacing:-.02em}h1{font-size:clamp(2.4rem,6.5vw,4.6rem);font-weight:800;line-height:1.02;letter-spacing:-.04em}h2{font-size:1.6rem}h3{font-size:1.05rem}
+p{margin:0 0 .75rem}a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:0 20px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 15px Figtree,sans-serif;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.btn:hover{box-shadow:var(--sh)}.btn:active{transform:scale(.97)}
+.btn.p{background:var(--blue);border-color:var(--blue);color:#0a0c10;font-weight:700}.btn.sm{min-height:36px;padding:0 14px;font-size:14px}.btn[disabled]{opacity:.55;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--lav);outline-offset:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:var(--sh)}
+input,textarea,select{width:100%;min-height:44px;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
+label{display:block;font-size:14px;font-weight:600;margin:0 0 4px}.f{margin-bottom:12px}
+.grid{display:grid;gap:16px}.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.g3{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.mute{color:var(--mute)}.tag{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--lav2);font-size:13px;font-weight:600}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0}.logo{font-weight:800;font-size:1.2rem;display:flex;gap:8px;align-items:center;text-decoration:none}
+.mark{width:30px;height:30px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--lav));display:grid;place-items:center;color:#0a0c10;font-size:16px}
+.hero{padding:72px 0 48px;display:grid;gap:32px;grid-template-columns:1.1fr .9fr;align-items:center}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.hide-m{display:none}}
+.demo{background:linear-gradient(160deg,var(--blue2),var(--lav2));border-radius:28px;padding:20px}
+.bub{padding:10px 14px;border-radius:16px;margin-bottom:8px;max-width:88%;font-size:15px}.u{background:var(--blue);color:#0a0c10;margin-left:auto}.a{background:var(--card)}
+section{padding:36px 0}.price{position:relative}.price ul{padding-left:18px;margin:12px 0}
+details{border-bottom:1px solid var(--line);padding:14px 0}summary{font-weight:600;cursor:pointer}
+footer{padding:32px 0;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+.side{padding:20px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.side a,.bot a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;text-decoration:none;font-weight:600;color:var(--mute)}
+.side a.on,.bot a.on{background:var(--blue2);color:var(--blue)}
+.main{padding:24px 24px 40px;max-width:900px;width:100%}
+.bot{display:none}
+@media(max-width:800px){.app{grid-template-columns:1fr}.side{display:none}.main{padding:18px 16px 96px}
+.bot{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));justify-content:space-around;z-index:5}
+.bot a{flex-direction:column;gap:2px;font-size:11px;padding:6px 8px;min-width:56px;text-align:center}}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--lav));transition:width .4s}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.chk{display:flex;gap:10px;align-items:center;padding:6px 0}.chk input{width:20px;min-height:20px;height:20px}
+.done{text-decoration:line-through;color:var(--mute)}
+.empty{text-align:center;padding:28px 12px;color:var(--mute);border:1.5px dashed var(--line);border-radius:18px}
+.warn{background:var(--lav2);border-radius:16px;padding:14px 16px;margin-bottom:16px}
+.out{white-space:pre-wrap;margin-top:14px;line-height:1.6}
+.x{background:none;border:0;color:var(--bad);cursor:pointer;font-size:18px;min-width:36px;min-height:36px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60% 50% at 80% 0%,rgba(139,107,255,.28),transparent 70%),radial-gradient(50% 40% at 10% 10%,rgba(200,255,61,.12),transparent 70%)}
+.grad{background:linear-gradient(90deg,var(--blue),#8be9c5 50%,var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{transform:translateY(-3px);border-color:rgba(200,255,61,.45);box-shadow:0 0 0 1px rgba(200,255,61,.2),0 12px 40px rgba(139,107,255,.18)}
+.btn.p:hover{box-shadow:0 0 28px rgba(200,255,61,.45)}
+.demo{background:linear-gradient(160deg,rgba(200,255,61,.08),rgba(139,107,255,.18));border:1px solid var(--line);box-shadow:0 20px 80px rgba(139,107,255,.25)}
+.bub.a{border:1px solid var(--line)}
+.tick{overflow:hidden;border-block:1px solid var(--line);padding:14px 0;margin:24px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.trk{display:flex;gap:40px;width:max-content;animation:sl 28s linear infinite;font-weight:800;font-size:1.25rem;letter-spacing:-.01em;color:var(--mute);text-transform:uppercase}
+.trk b{color:var(--blue)}
+@keyframes sl{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.trk{animation:none}}
+section h2{font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.03em}
+</style></head><body>
+<div id="root"></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,9);
+const DEF={name:'',assign:[],sess:[],goals:[],plan:'Free'};
+let S;try{S={...DEF,...JSON.parse(localStorage.getItem('sm')||'{}')}}catch(e){S={...DEF}}
+const save=()=>{try{localStorage.setItem('sm',JSON.stringify(S))}catch(e){}};
+const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const NAV=[['dashboard','Home','🏠'],['assistant','Assistant','💬'],['notes','Notes','📄'],['assignments','Assignments','✅'],['handbook','Handbook','📘'],['planner','Timetable','🗓️'],['plans','Plans','⭐']];
+const AI_MSG=`<div class="warn"><b>AI isn’t connected yet.</b> This tool needs a server function that holds your OPENAI_API_KEY. This page is a front-end demo and can’t call OpenAI safely, so nothing is generated here.</div>`;
+function fmtDate(d){return d?new Date(d+'T00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}):'No date'}
+function daysLeft(d){return Math.ceil((new Date(d+'T00:00')-new Date(new Date().toDateString()))/864e5)}
+function pct(a){const t=a.tasks.length;return t?Math.round(a.tasks.filter(x=>x.done).length/t*100):0}
+
+const pages={
+landing(){return `<div class="wrap"><div class="nav"><a class="logo" href="#home"><span class="mark">✦</span>StudyMate AI</a>
+<div class="row"><a class="btn sm hide-m" href="#faq">FAQ</a><a class="btn sm hide-m" href="#pricing">Pricing</a><button class="btn sm p" data-act="start">Get started free</button></div></div>
+<div class="hero"><div><span class="tag" style="margin-bottom:16px">Built for UK uni students</span><h1>Stop copy-pasting slides. <span class="grad">Start understanding them.</span></h1><p class="mute" style="font-size:1.15rem;max-width:30em">Turn your lectures into notes you actually understand, and never miss a deadline. Notes, assignments and your revision timetable, all in one place built for UK university students.</p>
+<button class="btn p" data-act="start">Get started free</button></div>
+<div class="demo"><div class="bub u">I just pasted this slide into my notes. What does it mean?</div><div class="bub a">Opportunity cost is what you give up when you pick one option over another…</div><div class="bub u">When is my next assessment due?</div><div class="bub a mute">Your assessment dates appear on your dashboard.</div></div></div>
+<div class="tick" aria-hidden="true"><div class="trk"><span>Lecture notes</span><b>✦</b><span>Deadlines</span><b>✦</b><span>Revision plans</span><b>✦</b><span>Handbook dates</span><b>✦</b><span>Check questions</span><b>✦</b><span>Lecture notes</span><b>✦</b><span>Deadlines</span><b>✦</b><span>Revision plans</span><b>✦</b><span>Handbook dates</span><b>✦</b><span>Check questions</span><b>✦</b></div></div>
+<section><h2>Everything under one roof</h2><div class="grid g3">
+${[['Assignment planner','Break coursework into tasks and watch deadlines.'],['Study timetable','Weekly sessions you can tick off.'],['Progress tracking','See what you’ve finished this week.'],['Lecture notes explainer','Plain-English notes, key terms and check questions.'],['Handbook deadlines','Paste your handbook and we find your assessment dates.'],['Study assistant','Ask anything about your course.']].map(f=>`<div class="card"><h3>${f[0]}</h3><p class="mute">${f[1]}</p></div>`).join('')}</div></section>
+<section><h2>Notes that make sense, deadlines you won’t miss</h2><div class="grid g3"><div class="card"><h3>1. Bring your lectures</h3><p class="mute">Paste your slide text or notes.</p></div><div class="card"><h3>2. Understand them</h3><p class="mute">Get plain-English explanations and check questions.</p></div><div class="card"><h3>3. Know your dates</h3><p class="mute">Paste your module handbook and we find every assessment date, then you plan revision around them.</p></div></div></section>
+<section id="pricing">${pricing()}</section>
+<section id="faq"><h2>Questions</h2>
+<details><summary>Will it write my assignments?</summary><p class="mute">No. It helps you understand briefs and organise work. You write it.</p></details>
+<details><summary>Is my data private?</summary><p class="mute">Your deadlines and goals stay in your own browser. Text you paste for AI features is sent to Claude to generate the result, so don’t paste anything confidential.</p></details>
+<details><summary>Can I install it on my phone?</summary><p class="mute">The PWA manifest and service worker are part of the full build.</p></details></section>
+<footer>© 2026 StudyMate AI. Built for UK students.</footer></div>`},
+dashboard(){const up=S.assign.filter(a=>pct(a)<100).sort((a,b)=>a.due>b.due?1:-1).slice(0,3);
+const wk=S.sess.length,wd=S.sess.filter(x=>x.done).length;
+return `<h2>Hello, ${esc(S.name||'there')} 👋</h2><p class="mute">Here’s where things stand.</p>
+<div class="grid g2"><div class="card"><h3>Upcoming deadlines</h3>${up.length?up.map(a=>`<div class="row"><span>${esc(a.title)}</span><span class="tag">${a.due?daysLeft(a.due)+' days':'no date'}</span></div>`).join(''):`<div class="empty">No deadlines yet.<br><a href="#assignments">Add an assignment</a></div>`}</div>
+<div class="card"><h3>Weekly study progress</h3>${wk?`<div class="bar"><i style="width:${Math.round(wd/wk*100)}%"></i></div><p class="mute" style="margin-top:8px">${wd} of ${wk} sessions done</p>`:`<div class="empty">No sessions planned.<br><a href="#planner">Build your timetable</a></div>`}</div>
+<div class="card"><h3>Daily goals</h3>${S.goals.map(g=>`<label class="chk"><input type="checkbox" data-goal="${g.id}" ${g.done?'checked':''}><span class="${g.done?'done':''}">${esc(g.t)}</span><button class="x" data-delgoal="${g.id}" aria-label="Delete goal">×</button></label>`).join('')}
+<div class="row" style="margin-top:8px"><input id="goal" placeholder="e.g. Read chapter 4" style="flex:1"><button class="btn sm p" data-act="addgoal">Add</button></div></div>
+<div class="card"><h3>AI tools</h3><div class="grid"><a class="btn" href="#assistant">Study Assistant</a><a class="btn" href="#notes">Lecture notes explainer</a><a class="btn" href="#handbook">Handbook deadlines</a></div></div></div>`},
+assistant(){return `<h2>Study Assistant</h2><div class="card"><div class="f"><label for="aq">Ask anything about your course</label><textarea id="aq" rows="3" placeholder="Explain opportunity cost simply"></textarea></div><div class="f"><label for="al">Level</label><select id="al"><option>Simple</option><option>Detailed</option><option>Exam-style</option></select></div><button class="btn p" data-act="ask">Explain</button><div id="out" class="out" aria-live="polite"></div></div>`},
+notes(){return `<h2>Lecture notes explainer</h2><div class="card"><p class="mute">Paste text from your slides or notes. You get a plain-English explanation, key terms and check questions.</p><div class="f"><label for="nt">Lecture text</label><textarea id="nt" rows="8" placeholder="Paste slide text here"></textarea></div><button class="btn p" data-act="explain">Make my notes</button><div id="out" class="out" aria-live="polite"></div></div>`},
+handbook(){return `<h2>Module handbook</h2><div class="card"><p class="mute">Paste the assessment section of your module handbook. We find the deadlines and you confirm them before saving.</p><div class="f"><label for="hb">Handbook text</label><textarea id="hb" rows="8" placeholder="Paste assessment details here"></textarea></div><button class="btn p" data-act="extract">Find my deadlines</button><div id="out" aria-live="polite"></div></div>`},
+assignments(){return `<h2>Assignment planner</h2><div class="card" style="margin-bottom:16px"><h3>New assignment</h3>
+<div class="f"><label for="at">Title</label><input id="at" placeholder="Economics essay"></div><div class="f"><label for="ad">Brief or notes</label><textarea id="ad" rows="2"></textarea></div><div class="f"><label for="adue">Deadline</label><input id="adue" type="date"></div><button class="btn p" data-act="addassign">Add assignment</button></div>
+${S.assign.length?S.assign.map(a=>`<div class="card" style="margin-bottom:12px"><div class="row"><div><h3>${esc(a.title)}</h3><span class="mute">Due ${fmtDate(a.due)}${a.due?' · '+daysLeft(a.due)+' days':''}</span></div><button class="x" data-delassign="${a.id}" aria-label="Delete assignment">🗑</button></div>
+${a.desc?`<p class="mute">${esc(a.desc)}</p>`:''}<div class="bar"><i style="width:${pct(a)}%"></i></div>
+${a.tasks.map((t,i)=>`<label class="chk"><input type="checkbox" data-task="${a.id}:${i}" ${t.done?'checked':''}><span class="${t.done?'done':''}">${esc(t.t)}</span></label>`).join('')}
+<div class="row" style="margin-top:8px"><input data-nt="${a.id}" placeholder="Add a task" style="flex:1"><button class="btn sm" data-addtask="${a.id}">Add task</button></div></div>`).join(''):`<div class="empty">No assignments yet. Add your first above.</div>`}`},
+planner(){return `<h2>Study timetable</h2><div class="card" style="margin-bottom:16px"><div class="grid g3"><div class="f"><label for="ss">Subject</label><input id="ss" placeholder="Statistics"></div><div class="f"><label for="sd">Day</label><select id="sd">${DAYS.map(d=>`<option>${d}</option>`).join('')}</select></div><div class="f"><label for="st">Start time</label><input id="st" type="time" value="10:00"></div></div><button class="btn p" data-act="addsess">Add session</button></div>
+${S.sess.length?DAYS.map(d=>{const l=S.sess.filter(s=>s.day===d).sort((a,b)=>a.time>b.time?1:-1);return l.length?`<div class="card" style="margin-bottom:10px"><h3>${d}</h3>${l.map(s=>`<div class="chk"><input type="checkbox" data-sess="${s.id}" ${s.done?'checked':''}><span class="${s.done?'done':''}" style="flex:1">${s.time} · ${esc(s.subject)}</span><button class="x" data-delsess="${s.id}" aria-label="Delete session">×</button></div>`).join('')}</div>`:''}).join(''):`<div class="empty">No sessions yet. Add one above.</div>`}`},
+plans(){return `<h2>Plans</h2>${pricing(true)}`}
+};
+function pricing(inApp){return `<h2>Simple pricing</h2><div class="grid g2"><div class="card price"><h3>Free</h3><p style="font-size:2rem;font-weight:800">£0</p><ul><li>Limited Study Assistant use</li><li>3 PDF summaries a month</li><li>Assignment Planner</li><li>5 AI quizzes a month</li><li>Basic Study Planner and progress</li></ul><button class="btn" ${inApp?'disabled':'data-act="start"'}>${inApp?'Your current plan':'Start free'}</button></div>
+<div class="card price" style="border-color:var(--lav)"><h3>StudyMate Plus</h3><p style="font-size:2rem;font-weight:800">£4.99<span class="mute" style="font-size:1rem">/month</span></p><ul><li>Higher AI limits</li><li>30 PDF summaries a month</li><li>Extended quiz generation</li><li>Advanced analytics and personalisation</li></ul><button class="btn p" disabled>Payments not set up yet</button></div></div>`}
+
+function render(){
+  const h=(location.hash||'#home').slice(1);
+  const r=$('#root');
+  if(h==='home'||h==='faq'||h==='pricing'||!pages[h]&&true){
+    r.innerHTML=pages.landing();
+    if(h==='faq'||h==='pricing')document.getElementById(h)?.scrollIntoView();return}
+  if(!S.name){r.innerHTML=`<div class="wrap" style="max-width:420px;padding-top:12vh"><a class="logo" href="#home"><span class="mark">✦</span>StudyMate AI</a><h2 style="margin-top:24px">Create your demo account</h2><p class="mute">Demo mode: your details stay in this browser only. Real sign-in needs Supabase.</p><div class="f"><label for="nm">First name</label><input id="nm" autocomplete="given-name"></div><button class="btn p" data-act="signin" style="width:100%">Continue</button></div>`;return}
+  const nav=(c)=>NAV.map(n=>`<a href="#${n[0]}" class="${n[0]===h?'on':''}"><span>${n[2]}</span>${c?n[1]:n[1]}</a>`).join('');
+  r.innerHTML=`<div class="app"><aside class="side"><a class="logo" href="#home" style="margin:0 0 16px"><span class="mark">✦</span>StudyMate AI</a>${nav()}<div style="flex:1"></div><button class="btn sm" data-act="signout">Sign out</button></aside><main class="main">${pages[h]()}</main><nav class="bot">${NAV.filter(n=>['dashboard','notes','handbook','assignments','planner'].includes(n[0])).map(n=>`<a href="#${n[0]}" class="${n[0]===h?'on':''}"><span>${n[2]}</span>${n[1]}</a>`).join('')}</nav></div>`;
+}
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button,input');if(!t)return;const d=t.dataset;
+  if(['ask','explain','extract','savedates'].includes(d.act))run(d.act,t);
+  else if(d.act==='start'){location.hash='#dashboard';render()}
+  else if(d.act==='signin'){const v=$('#nm').value.trim();if(!v){$('#nm').focus();return}S.name=v;save();render()}
+  else if(d.act==='signout'){S.name='';save();location.hash='#home';render()}
+  else if(d.act==='addgoal'){const v=$('#goal').value.trim();if(v){S.goals.push({id:uid(),t:v,done:false});save();render()}}
+  else if(d.delgoal){S.goals=S.goals.filter(g=>g.id!==d.delgoal);save();render()}
+  else if(d.act==='addassign'){const v=$('#at').value.trim();if(!v){$('#at').focus();return}S.assign.push({id:uid(),title:v,desc:$('#ad').value.trim(),due:$('#adue').value,tasks:[]});save();render()}
+  else if(d.delassign){S.assign=S.assign.filter(a=>a.id!==d.delassign);save();render()}
+  else if(d.addtask){const i=document.querySelector(`[data-nt="${d.addtask}"]`);if(i.value.trim()){S.assign.find(a=>a.id===d.addtask).tasks.push({t:i.value.trim(),done:false});save();render()}}
+  else if(d.act==='addsess'){const v=$('#ss').value.trim();if(!v){$('#ss').focus();return}S.sess.push({id:uid(),subject:v,day:$('#sd').value,time:$('#st').value,done:false});save();render()}
+  else if(d.delsess){S.sess=S.sess.filter(s=>s.id!==d.delsess);save();render()}
+});
+document.addEventListener('change',e=>{
+  const d=e.target.dataset;
+  if(d.goal){const g=S.goals.find(x=>x.id===d.goal);g.done=e.target.checked}
+  else if(d.task){const[a,i]=d.task.split(':');S.assign.find(x=>x.id===a).tasks[i].done=e.target.checked}
+  else if(d.sess){S.sess.find(x=>x.id===d.sess).done=e.target.checked}
+  else return;
+  save();render();
+});
+let found=[];
+async function run(act,b){
+const out=$('#out');
+if(act==='savedates'){
+ document.querySelectorAll('[data-fd]').forEach(r=>{if(!r.querySelector('input[type=checkbox]').checked)return;S.assign.push({id:uid(),title:r.querySelector('[data-ft]').value.trim()||'Assessment',desc:'',due:r.querySelector('input[type=date]').value,tasks:[]})});
+ save();location.hash='#assignments';render();return}
+const src=act==='ask'?$('#aq').value:act==='explain'?$('#nt').value:$('#hb').value;
+if(!src.trim()){out.textContent='Add some text first.';return}
+b.disabled=true;out.textContent='Working…';
+try{
+ const r=await fetch('/.netlify/functions/ai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:act,text:src,level:act==='ask'?$('#al').value:''})});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok)throw new Error(j.error||'Something went wrong. Please try again.');
+ if(act==='extract'){
+  let a=[];try{a=JSON.parse(j.text.replace(/```json|```/g,'').trim())}catch(e){}
+  found=Array.isArray(a)?a:[];
+  out.innerHTML=found.length?`<div class="card" style="margin-top:14px"><h3>Check these before saving</h3>${found.map(f=>`<div data-fd class="row" style="margin-bottom:8px;flex-wrap:nowrap"><input type="checkbox" checked aria-label="Include" style="width:20px;min-height:20px;flex:none"><input data-ft aria-label="Title" value="${esc(f.title||'')}"><input type="date" aria-label="Deadline" value="${esc(f.due||'')}" style="max-width:150px"></div>`).join('')}<button class="btn p" data-act="savedates">Add to my assignments</button></div>`:'<div class="empty">No assessments found. Try pasting the assessment section.</div>'}
+ else out.textContent=j.text;
+}catch(e){out.textContent=e.message||'Something went wrong. Please try again.'}
+b.disabled=false}
+addEventListener('hashchange',render);render();
+</script></body></html>
